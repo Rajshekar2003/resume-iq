@@ -1,0 +1,6 @@
+# Personal resumes dropped here for local testing — never commit real documents
+test_files/*.pdf
+test_files/*.docx
+
+# Keep the folder itself tracked
+!test_files/.gitkeep
