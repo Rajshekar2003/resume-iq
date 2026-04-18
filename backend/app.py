@@ -2,6 +2,7 @@ from flask import Flask, jsonify, request
 from flask_cors import CORS
 
 from routes.analyze import analyze_bp
+from routes.extract_keywords import extract_keywords_bp
 from routes.match import match_bp
 from utils.file_handling import FileHandlingError, process_uploaded_resume
 
@@ -11,6 +12,7 @@ app = Flask(__name__)
 CORS(app)
 
 app.register_blueprint(analyze_bp)
+app.register_blueprint(extract_keywords_bp)
 app.register_blueprint(match_bp)
 
 

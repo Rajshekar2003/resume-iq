@@ -1,3 +1,5 @@
+from typing import Literal
+
 from pydantic import BaseModel, Field
 
 
@@ -6,6 +8,16 @@ class AtsScoreResponse(BaseModel):
     strengths: list[str] = Field(..., min_length=3, max_length=3)
     weaknesses: list[str] = Field(..., min_length=3, max_length=3)
     ats_tips: list[str] = Field(..., min_length=3, max_length=3)
+
+
+class Keyword(BaseModel):
+    keyword: str = Field(..., min_length=2, max_length=60)
+    category: Literal["language", "framework", "library", "database", "cloud", "tool", "methodology", "concept", "role-specific"]
+    importance: Literal["critical", "important", "nice-to-have"]
+
+
+class KeywordExtractionResponse(BaseModel):
+    keywords: list[Keyword] = Field(..., min_length=15, max_length=20)
 
 
 class JdMatchResponse(BaseModel):
