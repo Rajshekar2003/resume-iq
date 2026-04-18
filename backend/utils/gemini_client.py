@@ -12,7 +12,7 @@ def _get_client() -> genai.GenerativeModel:
             "GEMINI_API_KEY is not set. Add your key to backend/.env"
         )
     genai.configure(api_key=api_key)
-    return genai.GenerativeModel("gemini-2.0-flash")
+    return genai.GenerativeModel("gemini-2.5-flash")
 
 
 def generate_text(prompt: str) -> str:
