@@ -6,3 +6,10 @@ class AtsScoreResponse(BaseModel):
     strengths: list[str] = Field(..., min_length=3, max_length=3)
     weaknesses: list[str] = Field(..., min_length=3, max_length=3)
     ats_tips: list[str] = Field(..., min_length=3, max_length=3)
+
+
+class JdMatchResponse(BaseModel):
+    match_percentage: int = Field(..., ge=0, le=100)
+    matched_keywords: list[str] = Field(..., min_length=5, max_length=20)
+    missing_keywords: list[str] = Field(..., min_length=3, max_length=15)
+    recommendation: str = Field(..., min_length=50, max_length=500)
