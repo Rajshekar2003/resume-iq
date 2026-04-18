@@ -25,3 +25,10 @@ class JdMatchResponse(BaseModel):
     matched_keywords: list[str] = Field(..., min_length=5, max_length=20)
     missing_keywords: list[str] = Field(..., min_length=3, max_length=15)
     recommendation: str = Field(..., min_length=50, max_length=500)
+
+
+class BulletImprovementResponse(BaseModel):
+    original: str = Field(..., min_length=10, max_length=500)
+    improved: str = Field(..., min_length=10, max_length=500)
+    changes_made: list[str] = Field(..., min_length=2, max_length=4)
+    strength_score: int = Field(..., ge=1, le=10)
