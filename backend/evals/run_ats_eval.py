@@ -248,12 +248,12 @@ def main() -> None:
         "aggregate": aggregate,
         "results": results,
     }
-    json_path.write_text(json.dumps(payload, indent=2))
+    json_path.write_text(json.dumps(payload, indent=2), encoding="utf-8")
 
     # Save Markdown
     md_path = RESULTS_DIR / f"ats_eval_{timestamp}.md"
     md_content = build_markdown_report(results, aggregate, prompt_hash, timestamp)
-    md_path.write_text(md_content)
+    md_path.write_text(md_content, encoding="utf-8")
 
     # Console summary
     agg = aggregate
