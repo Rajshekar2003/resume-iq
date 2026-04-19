@@ -25,3 +25,7 @@ Thumbs.db
 .vscode/
 .idea/
 *.swp
+
+# Eval output artifacts (keep .gitkeep, ignore generated reports)
+backend/evals/results/*.json
+backend/evals/results/*.md
