@@ -222,7 +222,7 @@ def main() -> None:
     print(f"\n{'='*60}")
     print(f"  ATS Eval Runner")
     print(f"  Cases: {len(ATS_EVAL_DATASET)} | Prompt hash: {prompt_hash}")
-    print(f"  Estimated time: 3-5 minutes (15 Gemini API calls)")
+    print(f"  Estimated time: ~7 minutes (15 Gemini API calls)")
     print(f"{'='*60}\n")
 
     results: list[dict] = []
@@ -237,6 +237,9 @@ def main() -> None:
         score_str = f"score={result['score']}" if result["score"] is not None else result["exception"]
         range_str = f" {'IN' if result['score_in_range'] else 'OUT OF'} range" if result["success"] else ""
         print(f"         {status} {score_str}{range_str} ({result['elapsed_seconds']}s)\n")
+
+        if i < total:
+            time.sleep(13)  # Gemini free tier allows 5 req/min — sleep to stay under the limit
 
     aggregate = compute_aggregate(results)
 
