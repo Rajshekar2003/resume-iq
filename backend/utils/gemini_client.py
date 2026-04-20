@@ -4,33 +4,38 @@ import re
 from typing import Type, TypeVar
 
 from dotenv import load_dotenv
+from groq import Groq
 from pydantic import BaseModel, ValidationError
-import google.generativeai as genai
 
 load_dotenv(dotenv_path=os.path.join(os.path.dirname(__file__), "..", ".env"))
 
 T = TypeVar("T", bound=BaseModel)
 
+_client: Groq | None = None
 
-def _get_client() -> genai.GenerativeModel:
-    api_key = os.getenv("GEMINI_API_KEY")
-    if not api_key or api_key == "your_key_here":
-        raise EnvironmentError(
-            "GEMINI_API_KEY is not set. Add your key to backend/.env"
-        )
-    genai.configure(api_key=api_key)
-    return genai.GenerativeModel("gemini-2.5-flash")
+
+def _get_client() -> Groq:
+    global _client
+    if _client is None:
+        api_key = os.getenv("GROQ_API_KEY")
+        if not api_key or api_key == "your_groq_key_here":
+            raise RuntimeError("GROQ_API_KEY is not set. Add your key to backend/.env")
+        _client = Groq(api_key=api_key)
+    return _client
 
 
 def generate_text(prompt: str) -> str:
     try:
-        model = _get_client()
-        response = model.generate_content(prompt)
-        return response.text
-    except EnvironmentError:
+        response = _get_client().chat.completions.create(
+            model="llama-3.3-70b-versatile",
+            messages=[{"role": "user", "content": prompt}],
+            temperature=0.3,
+        )
+        return response.choices[0].message.content
+    except RuntimeError:
         raise
     except Exception as e:
-        raise RuntimeError(f"Gemini API call failed: {e}") from e
+        raise RuntimeError(f"Groq API call failed: {e}") from e
 
 
 def _strip_code_fences(text: str) -> str:
