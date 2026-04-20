@@ -4,3 +4,9 @@ test_files/*.docx
 
 # Keep the folder itself tracked
 !test_files/.gitkeep
+
+# Scraped JD data — too large/ephemeral to commit
+rag/data/*.json
+
+# Keep the data folder tracked
+!rag/data/.gitkeep
