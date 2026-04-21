@@ -7,7 +7,7 @@ function isValidFile(file) {
   return ACCEPTED_MIME.includes(file.type) || ACCEPTED.some((ext) => file.name.endsWith(ext));
 }
 
-export default function ResumeUpload({ onFileSelected, disabled }) {
+export default function ResumeUpload({ onFileSelected, disabled, persistMessage }) {
   const inputRef = useRef(null);
   const [dragging, setDragging] = useState(false);
   const [validationError, setValidationError] = useState(null);
@@ -89,6 +89,9 @@ export default function ResumeUpload({ onFileSelected, disabled }) {
 
       {validationError && (
         <p className="mt-2 text-xs text-red-600">{validationError}</p>
+      )}
+      {persistMessage && (
+        <p className="mt-2 text-xs text-gray-400">{persistMessage}</p>
       )}
     </div>
   );

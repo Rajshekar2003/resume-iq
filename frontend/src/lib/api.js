@@ -37,3 +37,42 @@ export async function improveBullet(bulletText) {
     throw e;
   }
 }
+
+export async function matchJobDescription(file, jobDescription) {
+  const form = new FormData();
+  form.append("resume", file);
+  form.append("job_description", jobDescription);
+  try {
+    const res = await fetch(`${BASE_URL}/api/match`, { method: "POST", body: form });
+    return handleResponse(res);
+  } catch (e) {
+    if (e instanceof TypeError) throw networkError();
+    throw e;
+  }
+}
+
+export async function extractKeywords(jobDescription) {
+  try {
+    const res = await fetch(`${BASE_URL}/api/extract-keywords`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ job_description: jobDescription }),
+    });
+    return handleResponse(res);
+  } catch (e) {
+    if (e instanceof TypeError) throw networkError();
+    throw e;
+  }
+}
+
+export async function analyzeMarket(file) {
+  const form = new FormData();
+  form.append("resume", file);
+  try {
+    const res = await fetch(`${BASE_URL}/api/market-analysis`, { method: "POST", body: form });
+    return handleResponse(res);
+  } catch (e) {
+    if (e instanceof TypeError) throw networkError();
+    throw e;
+  }
+}
