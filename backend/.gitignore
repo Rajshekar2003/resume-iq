@@ -10,3 +10,6 @@ rag/data/*.json
 
 # Keep the data folder tracked
 !rag/data/.gitkeep
+
+# ChromaDB vector store — large binary, rebuild from source
+rag/data/chroma_db/
