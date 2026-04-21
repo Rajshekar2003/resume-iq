@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { analyzeResume, matchJobDescription, extractKeywords, analyzeMarket } from "./lib/api";
+import Hero from "./components/Hero";
 import BulletImproverTool from "./components/BulletImproverTool";
 import ResumeUpload from "./components/ResumeUpload";
 import TabNav from "./components/TabNav";
@@ -60,7 +61,7 @@ function AtsTab({ file }) {
       {error && <ErrorDisplay error={error} onDismiss={() => setError(null)} />}
       {result && <AtsScoreCard result={result} />}
       {!loading && !result && !error && (
-        <div className="text-center py-12 text-gray-400">
+        <div className="text-center py-12 text-slate-400">
           <p className="text-4xl mb-3">📋</p>
           <p className="text-sm">Click Analyze Resume to get your ATS score.</p>
         </div>
@@ -190,9 +191,9 @@ function MarketTab({ file }) {
       {error && <ErrorDisplay error={error} onDismiss={() => setError(null)} />}
       {result && <MarketAnalysisPanel result={result} />}
       {!loading && !result && !error && (
-        <div className="text-center py-12 text-gray-400">
+        <div className="text-center py-12 text-slate-400">
           <p className="text-4xl mb-3">📊</p>
-          <p className="text-sm">Click Analyze Market to see how your resume positions in the job market.</p>
+          <p className="text-sm">Click Analyze Market to see how your profile compares to the job market.</p>
         </div>
       )}
     </div>
@@ -204,40 +205,34 @@ export default function App() {
   const [activeTab, setActiveTab] = useState("ats");
 
   return (
-    <div className="min-h-screen bg-gray-50">
-      <header className="bg-white border-b border-gray-200">
-        <div className="max-w-3xl mx-auto px-4 py-5">
-          <h1 className="text-2xl font-bold text-gray-900">AI Resume Analyzer</h1>
-          <p className="text-sm text-gray-500 mt-1">
-            ATS scoring, JD matching, keyword extraction, and market insights
-          </p>
-        </div>
-      </header>
+    <div className="min-h-screen bg-slate-50">
+      <Hero />
 
-      <main className="max-w-3xl mx-auto px-4 py-8 space-y-6">
-        {/* Resume upload — hidden on Keywords tab since it doesn't need a file */}
-        {activeTab !== "keywords" && (
-          <ResumeUpload
-            onFileSelected={setSelectedFile}
-            persistMessage="This resume will be used for: ATS Analysis, JD Match, and Market Insights."
-          />
-        )}
+      {/* Main card overlaps hero bottom */}
+      <div className="max-w-3xl mx-auto px-4 -mt-12 pb-16 space-y-8">
+        <div className="bg-white rounded-2xl shadow-xl p-6 md:p-8 space-y-6">
+          {activeTab !== "keywords" && (
+            <ResumeUpload
+              onFileSelected={setSelectedFile}
+              persistMessage="This resume will be used for: ATS Analysis, JD Match, and Market Insights."
+            />
+          )}
 
-        <TabNav tabs={TABS} activeTab={activeTab} onTabChange={setActiveTab} />
+          <TabNav tabs={TABS} activeTab={activeTab} onTabChange={setActiveTab} />
 
-        <div>
-          {activeTab === "ats" && <AtsTab file={selectedFile} />}
-          {activeTab === "match" && <JdMatchTab file={selectedFile} />}
-          {activeTab === "keywords" && <KeywordsTab />}
-          {activeTab === "market" && <MarketTab file={selectedFile} />}
+          <div>
+            {activeTab === "ats" && <AtsTab file={selectedFile} />}
+            {activeTab === "match" && <JdMatchTab file={selectedFile} />}
+            {activeTab === "keywords" && <KeywordsTab />}
+            {activeTab === "market" && <MarketTab file={selectedFile} />}
+          </div>
         </div>
 
-        <hr className="border-gray-200" />
-
-        <section>
+        {/* Bullet Improver — separate card */}
+        <div className="bg-white rounded-2xl shadow-lg p-6 md:p-8">
           <BulletImproverTool />
-        </section>
-      </main>
+        </div>
+      </div>
     </div>
   );
 }

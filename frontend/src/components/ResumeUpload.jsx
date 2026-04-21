@@ -1,4 +1,5 @@
 import { useRef, useState } from "react";
+import { Upload, FileText, Trash2 } from "lucide-react";
 
 const ACCEPTED = [".pdf", ".docx"];
 const ACCEPTED_MIME = ["application/pdf", "application/vnd.openxmlformats-officedocument.wordprocessingml.document"];
@@ -53,7 +54,7 @@ export default function ResumeUpload({ onFileSelected, disabled, persistMessage 
         onDrop={handleDrop}
         className={[
           "border-2 border-dashed rounded-xl p-8 text-center transition-colors cursor-pointer select-none",
-          dragging ? "border-blue-400 bg-blue-50" : "border-gray-300 hover:border-blue-400 hover:bg-gray-50",
+          dragging ? "border-blue-400 bg-blue-50" : "border-slate-300 hover:border-blue-400 hover:bg-blue-50/50",
           disabled ? "opacity-50 cursor-not-allowed pointer-events-none" : "",
         ].join(" ")}
       >
@@ -68,21 +69,22 @@ export default function ResumeUpload({ onFileSelected, disabled, persistMessage 
 
         {selectedFile ? (
           <div className="flex flex-col items-center gap-2">
-            <span className="text-3xl">📄</span>
-            <p className="font-medium text-gray-800 text-sm break-all">{selectedFile.name}</p>
-            <p className="text-xs text-gray-500">{sizeKb} KB</p>
+            <FileText className="w-10 h-10 text-blue-500" />
+            <p className="font-semibold text-slate-800 text-sm break-all">{selectedFile.name}</p>
+            <p className="text-xs text-slate-500">{sizeKb} KB</p>
             <button
               onClick={(e) => { e.stopPropagation(); handleClear(); }}
-              className="mt-1 text-xs text-red-500 hover:text-red-700 underline transition-colors"
+              className="mt-1 inline-flex items-center gap-1 text-xs text-red-500 hover:text-red-700 transition-colors"
             >
-              Clear
+              <Trash2 className="w-3.5 h-3.5" />
+              Remove
             </button>
           </div>
         ) : (
-          <div className="flex flex-col items-center gap-2 text-gray-500">
-            <span className="text-3xl">⬆️</span>
+          <div className="flex flex-col items-center gap-2 text-slate-500">
+            <Upload className="w-10 h-10 text-slate-400" />
             <p className="text-sm font-medium">Drop your resume here or click to browse</p>
-            <p className="text-xs">PDF or DOCX, any size</p>
+            <p className="text-xs text-slate-400">PDF or DOCX, any size</p>
           </div>
         )}
       </div>
@@ -91,7 +93,7 @@ export default function ResumeUpload({ onFileSelected, disabled, persistMessage 
         <p className="mt-2 text-xs text-red-600">{validationError}</p>
       )}
       {persistMessage && (
-        <p className="mt-2 text-xs text-gray-400">{persistMessage}</p>
+        <p className="mt-2 text-xs text-slate-400">{persistMessage}</p>
       )}
     </div>
   );

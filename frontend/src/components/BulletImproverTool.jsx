@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { Wand2 } from "lucide-react";
 import { improveBullet } from "../lib/api";
 import ErrorDisplay from "./ErrorDisplay";
 import LoadingSpinner from "./LoadingSpinner";
@@ -32,9 +33,14 @@ export default function BulletImproverTool() {
   const canSubmit = !tooShort && !tooLong && !loading;
 
   return (
-    <div className="bg-white border border-gray-200 rounded-xl p-6 shadow-sm">
-      <h2 className="text-lg font-semibold text-gray-800 mb-1">Bullet Point Improver</h2>
-      <p className="text-sm text-gray-500 mb-4">Paste a resume bullet and get an AI-rewritten version with impact.</p>
+    <div className="bg-white border border-slate-200 rounded-xl p-6 shadow-sm">
+      <h2 className="text-lg font-semibold text-slate-800 mb-1 flex items-center gap-2">
+        <Wand2 className="w-5 h-5 text-blue-500" />
+        Bullet Point Improver
+      </h2>
+      <p className="text-sm text-slate-500 mb-4">
+        Paste a resume bullet and get an AI-rewritten version with impact.
+      </p>
 
       <form onSubmit={handleSubmit} className="space-y-3">
         <div>
@@ -45,11 +51,11 @@ export default function BulletImproverTool() {
             rows={3}
             maxLength={MAX}
             disabled={loading}
-            className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm text-gray-800 resize-none focus:outline-none focus:ring-2 focus:ring-blue-400 disabled:opacity-50"
+            className="w-full border border-slate-300 rounded-lg px-3 py-2 text-sm text-slate-800 resize-none focus:outline-none focus:ring-2 focus:ring-blue-400 disabled:opacity-50"
           />
           <div className="flex justify-between mt-1">
-            <span className="text-xs text-gray-400">Min {MIN} characters</span>
-            <span className={`text-xs ${tooLong ? "text-red-500" : "text-gray-400"}`}>
+            <span className="text-xs text-slate-400">Min {MIN} characters</span>
+            <span className={`text-xs ${tooLong ? "text-red-500" : "text-slate-400"}`}>
               {text.length} / {MAX}
             </span>
           </div>
@@ -64,37 +70,34 @@ export default function BulletImproverTool() {
         </button>
       </form>
 
-      {loading && <LoadingSpinner label="Rewriting bullet..." />}
+      {loading && <LoadingSpinner label="Rewriting bullet…" />}
       {error && <ErrorDisplay error={error} onDismiss={() => setError(null)} />}
 
       {result && (
         <div className="mt-6 space-y-4">
-          {/* Score */}
           <div className="flex items-center gap-2">
-            <span className="text-sm font-medium text-gray-600">Impact Score:</span>
-            <span className={`text-lg font-bold ${result.strength_score >= 7 ? "text-green-600" : result.strength_score >= 4 ? "text-amber-500" : "text-red-500"}`}>
+            <span className="text-sm font-medium text-slate-600">Impact Score:</span>
+            <span className={`text-lg font-bold ${result.strength_score >= 7 ? "text-emerald-600" : result.strength_score >= 4 ? "text-amber-500" : "text-red-500"}`}>
               {result.strength_score} / 10
             </span>
           </div>
 
-          {/* Side-by-side comparison */}
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-            <div className="bg-gray-50 border border-gray-200 rounded-lg p-4">
-              <p className="text-xs font-semibold text-gray-500 uppercase tracking-wide mb-2">Original</p>
-              <p className="text-sm text-gray-700">{result.original}</p>
+            <div className="bg-slate-50 border border-slate-200 rounded-lg p-4">
+              <p className="text-xs font-semibold text-slate-500 uppercase tracking-wide mb-2">Before</p>
+              <p className="text-sm text-slate-700">{result.original}</p>
             </div>
-            <div className="bg-green-50 border border-green-200 rounded-lg p-4">
-              <p className="text-xs font-semibold text-green-600 uppercase tracking-wide mb-2">Improved</p>
-              <p className="text-sm text-gray-800">{result.improved}</p>
+            <div className="bg-emerald-50 border border-emerald-200 rounded-lg p-4">
+              <p className="text-xs font-semibold text-emerald-600 uppercase tracking-wide mb-2">After</p>
+              <p className="text-sm text-slate-800">{result.improved}</p>
             </div>
           </div>
 
-          {/* Changes */}
           <div>
-            <p className="text-xs font-semibold text-gray-600 uppercase tracking-wide mb-2">Changes Made</p>
+            <p className="text-xs font-semibold text-slate-500 uppercase tracking-wide mb-2">Changes Made</p>
             <ul className="space-y-1">
               {result.changes_made.map((change, i) => (
-                <li key={i} className="text-sm text-gray-700 flex gap-2">
+                <li key={i} className="text-sm text-slate-700 flex gap-2">
                   <span className="text-blue-500 shrink-0">→</span>
                   <span>{change}</span>
                 </li>
