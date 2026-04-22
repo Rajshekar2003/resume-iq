@@ -12,4 +12,4 @@ rag/data/*.json
 !rag/data/.gitkeep
 
 # ChromaDB vector store — large binary, rebuild from source
-rag/data/chroma_db/
+#rag/data/chroma_db/
