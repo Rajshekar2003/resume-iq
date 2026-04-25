@@ -3,7 +3,7 @@ import Logo from "./Logo";
 
 export default function Hero() {
   return (
-    <div className="relative bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-50">
+    <div className="relative bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-50 pb-32">
       {/* Top nav with logo */}
       <div className="max-w-6xl mx-auto px-4 pt-6">
         <Logo />

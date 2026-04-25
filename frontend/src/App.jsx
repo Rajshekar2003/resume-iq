@@ -209,8 +209,8 @@ export default function App() {
       <Hero />
 
       {/* Main card overlaps hero bottom */}
-      <div className="max-w-3xl mx-auto px-4 -mt-12 pb-16 space-y-8">
-        <div className="bg-white rounded-2xl shadow-xl p-6 md:p-8 space-y-8">
+      <div className="max-w-3xl mx-auto px-4 -mt-20 pb-16 space-y-8">
+        <div className="bg-white rounded-2xl shadow-xl p-8 md:p-10 space-y-8">
           {activeTab !== "keywords" && (
             <ResumeUpload
               onFileSelected={setSelectedFile}
