@@ -65,11 +65,24 @@ export async function extractKeywords(jobDescription) {
   }
 }
 
+function isMemoryConstrainedError(response) {
+  if (response && (response.status === 500 || response.status === 502 || response.status === 503)) {
+    return true;
+  }
+  return false;
+}
+
 export async function analyzeMarket(file) {
   const form = new FormData();
   form.append("resume", file);
   try {
     const res = await fetch(`${BASE_URL}/api/market-analysis`, { method: "POST", body: form });
+    if (!res.ok && isMemoryConstrainedError(res)) {
+      throw new Error(
+        "Market Insights requires more memory than free-tier hosting provides. " +
+        "This feature works in local development. See the project README for setup instructions."
+      );
+    }
     return handleResponse(res);
   } catch (e) {
     if (e instanceof TypeError) throw networkError();

@@ -9,6 +9,7 @@ const ICONS = {
 
 export default function TabNav({ tabs, activeTab, onTabChange }) {
   return (
+    <div className="border-b border-slate-200 pb-1 mb-2">
     <div className="flex flex-wrap gap-2" role="tablist">
       {tabs.map((tab) => {
         const isActive = tab.id === activeTab;
@@ -31,6 +32,7 @@ export default function TabNav({ tabs, activeTab, onTabChange }) {
           </button>
         );
       })}
+    </div>
     </div>
   );
 }
