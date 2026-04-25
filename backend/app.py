@@ -11,7 +11,17 @@ from utils.file_handling import FileHandlingError, process_uploaded_resume
 app = Flask(__name__)
 
 # Allow all origins so the React frontend (any port) can call this API
-CORS(app)
+CORS(app, resources={
+    r"/api/*": {
+        "origins": [
+            "http://localhost:5173",
+            "http://127.0.0.1:5173",
+            "https://resume-iq-indol.vercel.app",
+            "https://resume-iq-rajshekarrc2003-7194s-projects.vercel.app",
+            "https://*.vercel.app"
+        ]
+    }
+})
 
 app.register_blueprint(analyze_bp)
 app.register_blueprint(extract_keywords_bp)
