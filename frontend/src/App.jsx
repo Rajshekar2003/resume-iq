@@ -57,7 +57,7 @@ function AtsTab({ file }) {
       >
         {loading ? "Analyzing…" : "Analyze Resume"}
       </button>
-      {loading && <LoadingSpinner label="Analyzing resume…" />}
+      {loading && <LoadingSpinner label="Analyzing resume…" variant="progressive" />}
       {error && <ErrorDisplay error={error} onDismiss={() => setError(null)} />}
       {result && <AtsScoreCard result={result} />}
       {!loading && !result && !error && (
@@ -108,7 +108,7 @@ function JdMatchTab({ file }) {
       >
         {loading ? "Matching…" : "Match JD"}
       </button>
-      {loading && <LoadingSpinner label="Matching job description…" />}
+      {loading && <LoadingSpinner label="Matching job description…" variant="progressive" />}
       {error && <ErrorDisplay error={error} onDismiss={() => setError(null)} />}
       {result && <JdMatchPanel result={result} />}
     </div>
@@ -151,7 +151,7 @@ function KeywordsTab() {
       >
         {loading ? "Extracting…" : "Extract Keywords"}
       </button>
-      {loading && <LoadingSpinner label="Extracting keywords…" />}
+      {loading && <LoadingSpinner label="Extracting keywords…" variant="progressive" />}
       {error && <ErrorDisplay error={error} onDismiss={() => setError(null)} />}
       {result && <KeywordPanel result={result} />}
     </div>
@@ -187,7 +187,7 @@ function MarketTab({ file }) {
       >
         {loading ? "Analyzing…" : "Analyze Market"}
       </button>
-      {loading && <LoadingSpinner label="Fetching market insights…" />}
+      {loading && <LoadingSpinner label="Fetching market insights…" variant="progressive" />}
       {error && <ErrorDisplay error={error} onDismiss={() => setError(null)} />}
       {result && <MarketAnalysisPanel result={result} />}
       {!loading && !result && !error && (
@@ -210,8 +210,12 @@ export default function App() {
 
       {/* Main card overlaps hero bottom */}
       <div className="max-w-3xl mx-auto px-4 -mt-20 pb-16 space-y-8">
-        <div className="bg-white rounded-2xl shadow-xl p-8 md:p-10 space-y-8">
-          {activeTab !== "keywords" && (
+        <div className="bg-white rounded-2xl shadow-2xl p-8 md:p-10 space-y-8">
+          {activeTab === "keywords" ? (
+            <p className="text-sm text-blue-700 bg-blue-50 border border-blue-200 rounded-lg px-4 py-3">
+              No resume needed for keyword extraction — paste the JD below.
+            </p>
+          ) : (
             <ResumeUpload
               onFileSelected={setSelectedFile}
               persistMessage="This resume will be used for: ATS Analysis, JD Match, and Market Insights."
